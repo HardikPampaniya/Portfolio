@@ -4,7 +4,7 @@ export const ProjectData = [
     description:
       "A MERN stack application where users can perform CRUD operation on form",
     techstack: ["MERN Stack", "React", "Node", "Express", "MySQL"],
-    live: "https://findyourjob.vercel.app",
+    live: "https://dynamic-form-builder-webapp.vercel.app/",
     github: "https://github.com/HardikPampaniya/Dynamic-Form-Builder",
   },
   {
@@ -23,12 +23,4 @@ export const ProjectData = [
     live: "https://notes-hardik.vercel.app/notes",
     github: "https://github.com/HardikPampaniya/Notes",
   },
-  {
-    title: "Temprature Converter",
-    description:
-      "Converts Celsius, Fahrenheit, Kelvin. Intuitive, reliable.",
-    techstack: ["HTML", "CSS", "Javascript"],
-    live: "https://notes-hardik.vercel.app/notes",
-    github: "https://github.com/HardikPampaniya/Temperature-Converter/tree/main",
-  },
-];
+
