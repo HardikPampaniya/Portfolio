@@ -23,4 +23,4 @@ export const ProjectData = [
     live: "https://notes-hardik.vercel.app/notes",
     github: "https://github.com/HardikPampaniya/Notes",
   },
-
+]
