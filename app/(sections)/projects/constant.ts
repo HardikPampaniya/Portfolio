@@ -23,4 +23,12 @@ export const ProjectData = [
     live: "https://notes-hardik.vercel.app/notes",
     github: "https://github.com/HardikPampaniya/Notes",
   },
+  {
+    title: "Temperature Converter",
+    description:
+      "A basic temperature converter website that convert the temprature into celsius, fahrenheit and kelvin ",
+    techstack: ["HTML", "CSS", "Javascript"],
+    live: "https://temp-converter-webapp.vercel.app/",
+    github: "https://github.com/HardikPampaniya/Temperature-Converter",
+  }
 ]
