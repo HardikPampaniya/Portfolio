@@ -6,7 +6,7 @@ export const ProjectData = [
     techstack: ["MERN Stack", "React", "Node", "Express", "MongoDB"],
     live: "https://chat-realtime-app.vercel.app/login",
     github: "https://github.com/HardikPampaniya/Chat-App",
-  }
+  },
   {
     title: "Dynamic Form Builder",
     description:
