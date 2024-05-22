@@ -33,7 +33,7 @@ export default function Home() {
             </Button>
           </Link>
           <Link
-            href="https://hardik-pampaniya.tiiny.site/"
+            href="https://drive.google.com/file/d/1IrOZj9ROo6ASbfynilLBDh_K7tDoqsZ0/view?usp=sharing"
             target="_blank"
           >
             <Button variant="secondary" className="flex rounded-full gap-2 items-center">
