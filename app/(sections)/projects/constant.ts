@@ -1,6 +1,6 @@
 export const ProjectData = [
   {
-    title: "Chat-App",
+    title: "Chatify",
     description:
       "This web-app provides a seamless and interactive chat experience",
     techstack: ["MERN Stack", "React", "Node", "Express", "MongoDB"],
