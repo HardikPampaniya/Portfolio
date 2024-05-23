@@ -4,7 +4,7 @@ export const ProjectData = [
     description:
       "This web-app provides a seamless and interactive chat experience",
     techstack: ["MERN Stack", "React", "Node", "Express", "MongoDB"],
-    live: "https://chat-realtime-app.vercel.app/login",
+    live: "https://chat-app-6u3w.onrender.com",
     github: "https://github.com/HardikPampaniya/Chat-App",
   },
   {
