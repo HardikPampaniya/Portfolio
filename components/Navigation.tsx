@@ -54,7 +54,7 @@ const Data = [
 export default function Navigation() {
   const pathName = usePathname();
   return (
-    <section className="fixed  bottom-0 w-full xl:bottom-5 lg:flex justify-center items-center z-50">
+    <section className="fixed backdrop-md bottom-0 w-full xl:bottom-5 lg:flex justify-center items-center z-50">
       <div className="md:rounded-full border backdrop-blur-md py-3 flex justify-center z-50 md:gap-1 shadow-xl">
         {Data.map(({ value, icon, src }) => (
           <Link href={src} key={value}>
