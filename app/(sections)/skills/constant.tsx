@@ -74,7 +74,7 @@ export const ToolSkills = [
   },
 ];
 
-function SkillCategory({ skills }: { skills: any[] }) {
+function SkillCategory({ skills }: { skills: { name: string; icon: string }[] }) {
   return (
     <div className="my-5 flex flex-wrap gap-5 md:w-[700px]">
       {skills.map((skill, index) => (

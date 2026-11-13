@@ -60,7 +60,7 @@ const Data = [
   {
     name: "Netclues Technologies Pvt. Ltd.",
     logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSCNPWXMttPr62alzxZXj7NzXn4XeI5n6EJeZYQdiyBPyorfzl_6L8uXCCX5E-f65rtSE",
-    timeSpan: "Feb 2024 - Current",
+    timeSpan: "Feb 2024 - July 2024",
     role: "Full Stack Web Developer Intern",
     about1: "Worked on various projects using MERN stack.",
     about2: "Worked On Fullstack Project",
