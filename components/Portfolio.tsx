@@ -32,6 +32,13 @@ const resumePreviewUrl =
   "https://drive.google.com/file/d/1KYT3lOSAdDVNm-inEjmzxNSHCTO2x09m/preview";
 const resumeDownloadUrl =
   "https://drive.google.com/uc?export=download&id=1KYT3lOSAdDVNm-inEjmzxNSHCTO2x09m";
+const emailJsServiceId =
+  process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_gmerd3k";
+const emailJsTemplateId =
+  process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_tionfoh";
+const emailJsPublicKey =
+  process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "6EVEHNi2YH8-iGWAd";
+const contactToastStorageKey = "portfolio-contact-success-toast";
 
 const navigation = [
   { label: "Home", id: "home" },
@@ -296,7 +303,10 @@ export default function Portfolio() {
   const [resumeOpen, setResumeOpen] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);
   const [sending, setSending] = useState(false);
-  const [formMessage, setFormMessage] = useState("");
+  const [toast, setToast] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
   const resumeDialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -324,32 +334,65 @@ export default function Portfolio() {
     if (!resumeOpen && dialog.open) dialog.close();
   }, [resumeOpen]);
 
+  useEffect(() => {
+    try {
+      const successMessage = window.sessionStorage.getItem(contactToastStorageKey);
+      if (!successMessage) return;
+
+      window.sessionStorage.removeItem(contactToastStorageKey);
+      setToast({ type: "success", message: successMessage });
+    } catch {
+      // The contact form still works if browser storage is unavailable.
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!toast) return;
+
+    const timeout = window.setTimeout(() => setToast(null), 5000);
+    return () => window.clearTimeout(timeout);
+  }, [toast]);
+
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(email);
       setEmailCopied(true);
       window.setTimeout(() => setEmailCopied(false), 2200);
     } catch {
-      setFormMessage("Copy is unavailable here. Use the email link to get in touch.");
+      setToast({
+        type: "error",
+        message: "Copy is unavailable here. Use the email link to get in touch.",
+      });
     }
   };
 
   const sendMessage = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSending(true);
-    setFormMessage("");
     const form = event.currentTarget;
     try {
       await emailjs.sendForm(
-        "service_gmerd3k",
-        "template_tionfoh",
+        emailJsServiceId,
+        emailJsTemplateId,
         form,
-        "6EVEHNi2YH8-iGWAd",
+        emailJsPublicKey,
       );
-      setFormMessage("Thanks — your message has been sent.");
       form.reset();
-    } catch {
-      setFormMessage(`Message could not be sent. Please email ${email} directly.`);
+      const successMessage = "Message sent successfully. Thanks for reaching out!";
+      try {
+        window.sessionStorage.setItem(contactToastStorageKey, successMessage);
+      } catch {
+        setToast({ type: "success", message: successMessage });
+        window.setTimeout(() => window.location.reload(), 1800);
+        return;
+      }
+      window.location.reload();
+    } catch (error) {
+      console.error("EmailJS message send failed:", error);
+      setToast({
+        type: "error",
+        message: `Message not sent. Check the EmailJS setup or email ${email}.`,
+      });
     } finally {
       setSending(false);
     }
@@ -357,6 +400,16 @@ export default function Portfolio() {
 
   return (
     <div className="portfolio-shell">
+      {toast && (
+        <div
+          className={`site-toast site-toast-${toast.type}`}
+          role={toast.type === "error" ? "alert" : "status"}
+          aria-live={toast.type === "error" ? "assertive" : "polite"}
+        >
+          {toast.type === "success" ? <Check size={17} /> : <X size={17} />}
+          <span>{toast.message}</span>
+        </div>
+      )}
       <header className="site-header">
         <a className="wordmark" href="#home" aria-label="Hardik Pampaniya, home">
           <span className="wordmark-icon">H<span>.</span></span>
@@ -549,7 +602,6 @@ export default function Portfolio() {
               <label htmlFor="contact-message">What would you like to build?</label>
               <textarea id="contact-message" name="message" rows={4} placeholder="Tell me a little about it…" required />
               <button className="button button-primary form-submit" type="submit" disabled={sending}>{sending ? "Sending…" : "Send message"}<ArrowRight size={16} /></button>
-              <p className="form-status" role="status">{formMessage}</p>
             </form>
           </div>
         </section>

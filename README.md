@@ -34,3 +34,17 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Contact form setup
+
+The contact form sends messages through EmailJS. Create an EmailJS email service and template, then set these values in a local `.env.local` file and in Vercel under **Project Settings → Environment Variables**:
+
+```env
+NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id
+NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
+NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+The template should use the form fields `{{name}}`, `{{email}}`, and `{{message}}`. Set the reply-to address to `{{email}}`. In EmailJS, allow your deployed site domain in the public key's allowed origins, then redeploy Vercel after adding or changing environment variables.
+
+After EmailJS accepts a message, the page reloads and displays a success toast. If sending fails, it keeps the entered message and shows an error toast.

@@ -316,7 +316,13 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .contact-form input:focus, .contact-form textarea:focus { border-color: rgba(216,252,104,.63); }
 .form-submit { width: 100%; margin-top: 15px; }
 .form-submit:disabled { opacity: .65; cursor: wait; transform: none; }
-.form-status { min-height: 18px; margin: 9px 0 0; color: #bfc9a6; font-size: 10px; }
+.site-toast { position: fixed; right: 24px; bottom: 24px; z-index: 120; display: flex; max-width: min(440px, calc(100vw - 32px)); align-items: center; gap: 11px; padding: 15px 18px; border: 1px solid var(--line-strong); color: var(--ink); background: #171a16; box-shadow: 0 16px 50px rgba(0,0,0,.42); font-size: 13px; line-height: 1.5; animation: toast-enter .22s ease-out both; }
+.site-toast svg { flex: 0 0 auto; }
+.site-toast-success { border-color: rgba(216,252,104,.55); }
+.site-toast-success svg { color: var(--accent); }
+.site-toast-error { border-color: rgba(255,128,128,.55); }
+.site-toast-error svg { color: #ff9c9c; }
+@keyframes toast-enter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 .site-footer { display: flex; min-height: 86px; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid var(--line); }
 .footer-brand { gap: 9px; font-size: 11px; font-weight: 550; }
