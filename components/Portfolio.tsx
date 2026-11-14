@@ -49,24 +49,34 @@ const navigation = [
   { label: "Contact", id: "contact" },
 ];
 
-const projects = [
+type Project = {
+  title: string;
+  type: string;
+  description: string;
+  technologies: string[];
+  live?: string;
+  github: string;
+  visual: string;
+  featured?: boolean;
+};
+
+const projects: Project[] = [
   {
-    title: "Dynamic Form Builder",
-    type: "Full-stack application",
+    title: "Beauty Parlour",
+    type: "Salon booking platform",
     description:
-      "A form-building web app for creating and managing custom forms, backed by a MERN-style stack.",
-    technologies: ["React", "Node.js", "Express", "MySQL"],
-    live: "https://dynamic-form-builder-webapp.vercel.app/",
-    github: "https://github.com/HardikPampaniya/Dynamic-Form-Builder",
-    visual: "forms",
+      "A salon website for exploring services and studio details, with an appointment flow prepared for future activation.",
+    technologies: ["React", "Vite", "Express", "MongoDB"],
+    github: "https://github.com/HardikPampaniya/Salon-Booking",
+    visual: "salon",
     featured: true,
   },
   {
     title: "Chatify",
-    type: "Real-time chat app",
+    type: "Real-time messaging and calls",
     description:
-      "A full-stack chat application designed around a straightforward, interactive messaging experience.",
-    technologies: ["React", "Node.js", "Express", "MongoDB"],
+      "A one-to-one chat app with Socket.IO messaging and browser-based WebRTC calls, backed by Node.js, Express, and MongoDB.",
+    technologies: ["Node.js", "Express", "MongoDB", "Socket.IO", "WebRTC"],
     live: "https://chat-app-6u3w.onrender.com",
     github: "https://github.com/HardikPampaniya/Chat-App",
     visual: "chat",
@@ -91,16 +101,6 @@ const projects = [
     live: "https://notes-hardik.vercel.app/notes",
     github: "https://github.com/HardikPampaniya/Notes",
     visual: "notes",
-  },
-  {
-    title: "Temperature Converter",
-    type: "Web utility",
-    description:
-      "A compact converter for Celsius, Fahrenheit, and Kelvin, built with the core web technologies.",
-    technologies: ["HTML", "CSS", "JavaScript"],
-    live: "https://temp-converter-webapp.vercel.app/",
-    github: "https://github.com/HardikPampaniya/Temperature-Converter",
-    visual: "temperature",
   },
 ];
 
@@ -181,32 +181,28 @@ function SectionHeading({
 }
 
 function ProjectVisual({ kind }: { kind: string }) {
-  if (kind === "forms") {
+  if (kind === "salon") {
     return (
-      <div className="project-preview preview-forms" aria-hidden="true">
-        <div className="preview-sidebar">
-          <span className="preview-brand-mark">F</span>
-          <span className="preview-sidebar-line active" />
-          <span className="preview-sidebar-line" />
-          <span className="preview-sidebar-line short" />
-        </div>
-        <div className="preview-workspace">
-          <div className="preview-topline"><span>FORM STUDIO</span><span>Draft · 03</span></div>
-          <div className="preview-form-layout">
-            <div className="preview-form-copy">
-              <span className="preview-kicker">NEW FORM</span>
-              <strong>Let&apos;s get to know you.</strong>
-              <span className="preview-field-label">Full name</span>
-              <span className="preview-input" />
-              <span className="preview-field-label">Email address</span>
-              <span className="preview-input" />
-              <span className="preview-submit">Continue <ArrowRight size={12} /></span>
+      <div className="project-preview preview-salon" aria-hidden="true">
+        <div className="salon-preview-shell">
+          <div className="salon-preview-header">
+            <span><i>DB</i> THE DREAM BEAUTY</span>
+            <span>OUR STORY&nbsp;&nbsp; SERVICES&nbsp;&nbsp; VISIT US</span>
+          </div>
+          <div className="salon-preview-main">
+            <div className="salon-preview-copy">
+              <span className="salon-preview-kicker">BEAUTY, YOUR WAY</span>
+              <strong>Take a moment<br />to feel <em>beautiful.</em></strong>
+              <span className="salon-preview-services">HAIR&nbsp; · &nbsp;SKIN&nbsp; · &nbsp;BEAUTY</span>
+              <span className="salon-preview-button">EXPLORE SERVICES <ArrowRight size={11} /></span>
             </div>
-            <div className="preview-inspector">
-              <span className="preview-inspector-title">FORM ELEMENTS</span>
-              <span className="preview-element"><i /> Short answer</span>
-              <span className="preview-element"><i /> Email</span>
-              <span className="preview-element"><i /> Dropdown</span>
+            <div className="salon-preview-booking">
+              <span className="salon-preview-label">YOUR VISIT</span>
+              <strong>Find your service</strong>
+              <div className="salon-preview-service"><span><i>01</i> Hair &amp; Styling</span><b>›</b></div>
+              <div className="salon-preview-service"><span><i>02</i> Skin &amp; Beauty</span><b>›</b></div>
+              <div className="salon-preview-date"><span>APPOINTMENT</span><b>SELECT A TIME</b></div>
+              <div className="salon-preview-slots"><i>10:30</i><i className="selected">12:00</i><i>14:30</i></div>
             </div>
           </div>
         </div>
@@ -258,17 +254,12 @@ function ProjectVisual({ kind }: { kind: string }) {
     );
   }
 
-  return (
-    <div className="project-preview preview-temperature" aria-hidden="true">
-      <div className="temp-top"><span>THERMO / 01</span><span>CONVERTER</span></div>
-      <div className="temp-main"><span className="temp-sun">☼</span><strong>24<span>°</span></strong><small>CELSIUS</small></div>
-      <div className="temp-units"><span><small>FAHRENHEIT</small><b>75.2°</b></span><span><small>KELVIN</small><b>297.15 K</b></span></div>
-      <div className="temp-slider"><i /></div>
-    </div>
-  );
+  return null;
 }
 
-function ProjectCard({ project }: { project: (typeof projects)[number] }) {
+function ProjectCard({ project }: { project: Project }) {
+  const primaryLink = project.live || project.github;
+
   return (
     <article className={`project-card${project.featured ? " project-card-featured" : ""}`}>
       <ProjectVisual kind={project.visual} />
@@ -278,7 +269,7 @@ function ProjectCard({ project }: { project: (typeof projects)[number] }) {
             <p className="project-type">{project.type}</p>
             <h3>{project.title}</h3>
           </div>
-          <a className="project-open" href={project.live} target="_blank" rel="noreferrer" aria-label={`Open ${project.title} live demo`}>
+          <a className="project-open" href={primaryLink} target="_blank" rel="noreferrer" aria-label={`Open ${project.title} ${project.live ? "live demo" : "source repository"}`}>
             <ArrowUpRight size={19} />
           </a>
         </div>
@@ -288,7 +279,7 @@ function ProjectCard({ project }: { project: (typeof projects)[number] }) {
             {project.technologies.map((technology) => <span key={technology}>{technology}</span>)}
           </div>
           <div className="project-links">
-            <a href={project.live} target="_blank" rel="noreferrer"><span>Live demo</span><ArrowUpRight size={14} /></a>
+            {project.live && <a href={project.live} target="_blank" rel="noreferrer"><span>Live demo</span><ArrowUpRight size={14} /></a>}
             <a href={project.github} target="_blank" rel="noreferrer"><Github size={14} /><span>Source</span></a>
           </div>
         </div>
@@ -561,7 +552,6 @@ export default function Portfolio() {
           <div className="projects-grid">
             {projects.map((project) => <ProjectCard key={project.title} project={project} />)}
           </div>
-          <p className="projects-note">Each preview is an editable, locally composed placeholder. Replace it with a project screenshot any time.</p>
         </section>
 
         <section className="services-section section-wrap page-wrap" id="services" aria-labelledby="services-title">
